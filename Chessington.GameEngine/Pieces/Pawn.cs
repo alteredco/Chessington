@@ -14,23 +14,54 @@ namespace Chessington.GameEngine.Pieces
         {
             //refactored code
             Square pawnPosition = board.FindPiece(this);
-            IEnumerable<Square> sq=Enumerable.Empty<Square>();
+           // IEnumerable<Square> sq=Enumerable.Empty<Square>();
+           List<Square> sq=new List<Square>();
             Boolean canMove = true;
             Boolean hasMoved = false;
 
-            canMove=CanPawnMoveForward(pawnPosition,this.Player,board);
+            canMove=CanPawnMoveForward(pawnPosition.Row,pawnPosition.Col,this.Player,board);
             if (canMove)
             {
-                Square newSquare=new Square();
-                if (this.Player == Player.Black)
-                {     newSquare = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col);
-                }
-                if (this.Player == Player.White)
-                {    newSquare = CreateNewSquare(pawnPosition.Row - 1, pawnPosition.Col);
-                }
-                sq= new Square[]{newSquare};
+              
+               // sq= new Square[]{newSquare};
+               if (this.Player == Player.Black)
+               {
+                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row, pawnPosition.Col));
+               }
+               if (this.Player == Player.White)
+               {
+                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row, pawnPosition.Col));
+               }
             }
 
+         /*   if (this.Player == Player.Black)
+            {
+                if (pawnPosition.Row == 1)
+                {
+                    canMove=CanPawnMoveForward(pawnPosition.Row+1,pawnPosition.Col,this.Player,board);
+                    if (canMove)
+                    {
+              
+                        // sq= new Square[]{newSquare};
+                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row+1 ,pawnPosition.Col));
+                    }
+                }
+            }
+
+            if (this.Player == Player.White)
+            {
+                if (pawnPosition.Row == 7)
+                {
+                    canMove=CanPawnMoveForward(pawnPosition.Row-1,pawnPosition.Col,this.Player,board);
+                    if (canMove)
+                    {
+              
+                        // sq= new Square[]{newSquare};
+                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row-1 ,pawnPosition.Col));
+                    }
+                }
+            }
+*/
             return sq;
              /*
             if (this.Player == Player.Black)
@@ -107,13 +138,28 @@ namespace Chessington.GameEngine.Pieces
            // return Enumerable.Empty<Square>();
         }
 
-        private Boolean CanPawnMoveForward(Square currentPawn,Player player,Board board)
+        private Square AddNewSquare(Player p,int row,int col)
+        {
+            Square newSquare=new Square();
+                
+            if (p  == Player.Black)
+            {    // newSquare = CreateNewSquare(row+1, col);
+            newSquare=new Square(row+1,col);
+            }
+            if (p == Player.White)
+            {    //newSquare = CreateNewSquare(row-1, row);
+                newSquare=new Square(row-1,col);
+            }
+
+            return newSquare;
+        }
+        private Boolean CanPawnMoveForward(int row, int col,Player player,Board board)
         {
             Boolean canMove = false;
        
             if (player == Player.Black)
             {
-                if (currentPawn.Row == 1) //checking for first move
+                /*if (currentPawn.Row == 1) //checking for first move
                 {
                     if (!IsSquareOccupied(currentPawn.Row + 2, currentPawn.Col, board))
                     {
@@ -121,18 +167,18 @@ namespace Chessington.GameEngine.Pieces
                     }
                 }
                 else
-                {
-                    if (!IsSquareOccupied(currentPawn.Row + 1, currentPawn.Col, board))
+                {*/
+                    if (!IsSquareOccupied(row + 1, col, board))
                     {
                         canMove = true;
                     } 
-                }
+              //  }
 
               
             }
             if (player == Player.White)
             {
-                if (currentPawn.Row == 7) //checking for first move
+              /*  if (currentPawn.Row == 7) //checking for first move
                 {
                     if (!IsSquareOccupied(currentPawn.Row - 2, currentPawn.Col, board))
                     {
@@ -140,12 +186,12 @@ namespace Chessington.GameEngine.Pieces
                     }
                 }
                 else
-                {
-                    if (!IsSquareOccupied(currentPawn.Row - 1, currentPawn.Col, board))
+                {*/
+                    if (!IsSquareOccupied(row - 1, col, board))
                     {
                         canMove = true;
                     }
-                }
+            //    }
                
              
             }
