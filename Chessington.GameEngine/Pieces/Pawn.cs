@@ -15,17 +15,35 @@ namespace Chessington.GameEngine.Pieces
             IEnumerable<Square> sq=Enumerable.Empty<Square>();
             if (this.Player == Player.Black)
             {
-                Square newBlackPosition = new Square(pawnPosition.Row + 1, pawnPosition.Col);
-                sq= new Square[]{newBlackPosition };
-               
+                if (pawnPosition.Row == 1)
+                {
+                    Square plusOneBlackPosition = new Square(pawnPosition.Row + 1, pawnPosition.Col);
+                    Square plusTwoBlackPosition = new Square(pawnPosition.Row + 2, pawnPosition.Col);
+
+                    sq= new Square[]{plusOneBlackPosition, plusTwoBlackPosition};
+                }
+                else{
+                    
+                    Square plusOneBlackPosition = new Square(pawnPosition.Row + 1, pawnPosition.Col);
+                    sq= new Square[]{plusOneBlackPosition};
+                }
             }
-            else
+            else if (this.Player == Player.White)
             {
-                Square newWhitePosition = new Square(pawnPosition.Row -1, pawnPosition.Col);
-                sq= new Square[]{newWhitePosition };
+                if (pawnPosition.Row == 7)
+                {
+                    Square plusOneBlackPosition = new Square(pawnPosition.Row - 1, pawnPosition.Col);
+                    Square plusTwoBlackPosition = new Square(pawnPosition.Row - 2, pawnPosition.Col);
+
+                    sq= new Square[]{plusOneBlackPosition, plusTwoBlackPosition};
+                }
+                else{
+                    
+                    Square plusOneBlackPosition = new Square(pawnPosition.Row - 1, pawnPosition.Col);
+                    sq= new Square[]{plusOneBlackPosition};
+                }
             }
-            
-          
+
             return sq;
            // return Enumerable.Empty<Square>();
         }

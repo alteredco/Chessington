@@ -1,7 +1,6 @@
-﻿﻿using System;
- using Chessington.GameEngine.Pieces;
+﻿using Chessington.GameEngine.Pieces;
 ﻿﻿using System.Linq;
- using FluentAssertions;
+using FluentAssertions;
  using NUnit.Framework;
 
 namespace Chessington.GameEngine.Tests.Pieces
