@@ -12,6 +12,7 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
+            //refactored code
             Square pawnPosition = board.FindPiece(this);
             IEnumerable<Square> sq=Enumerable.Empty<Square>();
             Boolean canMove = true;
