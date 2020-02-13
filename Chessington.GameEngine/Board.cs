@@ -23,7 +23,7 @@ namespace Chessington.GameEngine
         public void AddPiece(Square square, Piece pawn)
         {
             _board[square.Row, square.Col] = pawn;
-            CapturedPieces.Add(pawn);
+           // CapturedPieces.Add(pawn);
         }
     
         public Piece GetPiece(Square square)
