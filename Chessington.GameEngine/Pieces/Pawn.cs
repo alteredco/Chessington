@@ -13,14 +13,31 @@ namespace Chessington.GameEngine.Pieces
         {
             Square pawnPosition = board.FindPiece(this);
             IEnumerable<Square> sq=Enumerable.Empty<Square>();
+            Boolean canMove = true;
             if (this.Player == Player.Black)
             {
                 if (pawnPosition.Row == 1)
                 {
                     Square plusOneBlackPosition = new Square(pawnPosition.Row + 1, pawnPosition.Col);
                     Square plusTwoBlackPosition = new Square(pawnPosition.Row + 2, pawnPosition.Col);
+                    foreach (var piece in board.CapturedPieces)
+                    {
+                        Square capturedSquare = board.FindPiece(piece);
+                        if (capturedSquare == plusTwoBlackPosition || capturedSquare == plusOneBlackPosition)
+                        {
+                            canMove = false;
+                        }
+                    }
 
-                    sq= new Square[]{plusOneBlackPosition, plusTwoBlackPosition};
+                    if (canMove)
+                    {
+                        sq= new Square[]{plusOneBlackPosition, plusTwoBlackPosition};
+                    }
+                    /*else
+                    {
+                        sq= new Square[]{pawnPosition};
+                    }*/
+                  
                 }
                 else{
                     
