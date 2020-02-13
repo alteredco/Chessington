@@ -113,11 +113,41 @@ namespace Chessington.GameEngine.Pieces
        
             if (player == Player.Black)
             {
-                canMove = IsSquareOccupied(currentPawn.Row+1, currentPawn.Col, board);
+                if (currentPawn.Row == 1) //checking for first move
+                {
+                    if (!IsSquareOccupied(currentPawn.Row + 2, currentPawn.Col, board))
+                    {
+                        canMove = true;
+                    }
+                }
+                else
+                {
+                    if (!IsSquareOccupied(currentPawn.Row + 1, currentPawn.Col, board))
+                    {
+                        canMove = true;
+                    } 
+                }
+
+              
             }
             if (player == Player.White)
             {
-                canMove = IsSquareOccupied(currentPawn.Row-1, currentPawn.Col, board);
+                if (currentPawn.Row == 7) //checking for first move
+                {
+                    if (!IsSquareOccupied(currentPawn.Row - 2, currentPawn.Col, board))
+                    {
+                        canMove = true;
+                    }
+                }
+                else
+                {
+                    if (!IsSquareOccupied(currentPawn.Row - 1, currentPawn.Col, board))
+                    {
+                        canMove = true;
+                    }
+                }
+               
+             
             }
           
 
@@ -185,7 +215,18 @@ namespace Chessington.GameEngine.Pieces
         private Boolean IsSquareOccupied(int row,int col,Board board)
         {
             Boolean sqOccuped = false;
-            foreach (var piece in board.CapturedPieces)
+            Square newSquare=new Square(row,col);
+            Square occupiedSquare=new Square(row,col);
+            Piece presentPiece = board.GetPiece(newSquare);
+            if (presentPiece is null)
+            {
+                sqOccuped = false;
+            }
+            else
+            {
+                sqOccuped = true;
+            }
+          /*  foreach (var piece in board.CapturedPieces)
             {
                 Square capturedSquare = board.FindPiece(piece);
                 if (capturedSquare.Col == col && capturedSquare.Row == row)
@@ -193,7 +234,7 @@ namespace Chessington.GameEngine.Pieces
                     sqOccuped = true;
                     break;
                 }
-            }
+            }*/
 
             return sqOccuped;
         }
