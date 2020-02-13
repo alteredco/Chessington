@@ -1,4 +1,5 @@
-﻿﻿using Chessington.GameEngine.Pieces;
+﻿﻿using System;
+ using Chessington.GameEngine.Pieces;
  using FluentAssertions;
  using NUnit.Framework;
 
