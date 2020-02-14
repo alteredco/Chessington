@@ -50,7 +50,7 @@ namespace Chessington.GameEngine.Pieces
 
             if (this.Player == Player.White)
             {
-                if (pawnPosition.Row == 7 && canMove)
+                if (pawnPosition.Row == 6 && canMove)
                 {
                     canMove=CanPawnMoveForward(pawnPosition.Row-1,pawnPosition.Col,this.Player,board);
                     if (canMove)
