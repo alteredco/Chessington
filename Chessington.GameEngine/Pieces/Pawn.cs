@@ -26,116 +26,52 @@ namespace Chessington.GameEngine.Pieces
                // sq= new Square[]{newSquare};
                if (this.Player == Player.Black)
                {
-                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row, pawnPosition.Col));
+                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row+1, pawnPosition.Col));
                }
                if (this.Player == Player.White)
                {
-                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row, pawnPosition.Col));
+                   sq.Add(AddNewSquare(this.Player, pawnPosition.Row-1, pawnPosition.Col));
                }
             }
 
-         /*   if (this.Player == Player.Black)
+            if (this.Player == Player.Black)
             {
-                if (pawnPosition.Row == 1)
+                if ((pawnPosition.Row == 1) && (canMove))
                 {
                     canMove=CanPawnMoveForward(pawnPosition.Row+1,pawnPosition.Col,this.Player,board);
                     if (canMove)
                     {
               
                         // sq= new Square[]{newSquare};
-                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row+1 ,pawnPosition.Col));
+                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row+2 ,pawnPosition.Col));
                     }
                 }
             }
 
             if (this.Player == Player.White)
             {
-                if (pawnPosition.Row == 7)
+                if (pawnPosition.Row == 7 && canMove)
                 {
                     canMove=CanPawnMoveForward(pawnPosition.Row-1,pawnPosition.Col,this.Player,board);
                     if (canMove)
                     {
               
                         // sq= new Square[]{newSquare};
-                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row-1 ,pawnPosition.Col));
+                        sq.Add(AddNewSquare(this.Player,pawnPosition.Row-2 ,pawnPosition.Col));
                     }
                 }
             }
-*/
-            return sq;
-             /*
-            if (this.Player == Player.Black)
-            {
-                if (pawnPosition.Row == 1)
+//checking for diagonal moves are available
+           List<Square> sq1=new List<Square>();
+            
+           
+                sq1=CanPawnMoveDiagonally(pawnPosition.Row,pawnPosition.Col,this.Player,board);
+                foreach (Square s in sq1)
                 {
-                    hasMoved = false;
-                    sq = CreateSquareList(pawnPosition.Row,pawnPosition.Col,'+',"forward");
-                    var plusOneBlackPosition = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col);
-                    var plusTwoBlackPosition = CreateNewSquare(pawnPosition.Row + 2, pawnPosition.Col); 
-                    
-                    var squareLeft = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col-1);
-                    var squareRight = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col+1); 
-                    canMove=CanPiecesBeMoved(board,pawnPosition,plusOneBlackPosition,plusTwoBlackPosition);
-                    if (!canMove)
-                    {
-                      sq=Enumerable.Empty<Square>();
-                    }
-
-                    canMove = CanMoveDiagonally(board, pawnPosition, squareLeft, squareRight);
-                    sq=CreateSquareList(pawnPosition.Row,pawnPosition.Col,'+',"diagonal");
-                    if (!canMove)
-                    {
-                        sq=Enumerable.Empty<Square>();
-                    }
+                    sq.Add(s);
                 }
-                else{
-                    
-                   var plusOneBlackPosition =  CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col);
-                    sq= new Square[]{plusOneBlackPosition};
-                    
-                /*  sq = CreateSquareList(pawnPosition.Row,pawnPosition.Col,'+',"forward");
-                  var plusOneBlackPosition = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col);
-                  var plusTwoBlackPosition = CreateNewSquare(pawnPosition.Row + 2, pawnPosition.Col); 
-                    
-                  var squareLeft = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col-1);
-                  var squareRight = CreateNewSquare(pawnPosition.Row + 1, pawnPosition.Col+1); 
-                  canMove=CanPiecesBeMoved(board,pawnPosition,plusOneBlackPosition,plusTwoBlackPosition);
-                  if (!canMove)
-                  {
-                      sq=Enumerable.Empty<Square>();
-                  }
-
-                  canMove = CanMoveDiagonally(board, pawnPosition, squareLeft, squareRight);
-                  sq=CreateSquareList(pawnPosition.Row,pawnPosition.Col,'+',"diagonal");
-                  if (!canMove)
-                  {
-                      sq=Enumerable.Empty<Square>();
-                  }
-                }
-            }
-            else if (this.Player == Player.White)
-            {
-                if (pawnPosition.Row == 7)
-                {
-                    sq = CreateSquareList(pawnPosition.Row,pawnPosition.Col,'-',"forward");
-                    var plusOneBlackPosition = CreateNewSquare(pawnPosition.Row - 1, pawnPosition.Col);
-                    var plusTwoBlackPosition = CreateNewSquare(pawnPosition.Row - 2, pawnPosition.Col);
-                    canMove=CanPiecesBeMoved(board,pawnPosition,plusOneBlackPosition,plusTwoBlackPosition);
-                    if (!canMove)
-                    {
-                        sq=Enumerable.Empty<Square>();
-                    }
-                
-                }
-                else{
-                    
-                    var plusOneBlackPosition = CreateNewSquare(pawnPosition.Row - 1, pawnPosition.Col);
-                    sq= new Square[]{plusOneBlackPosition};
-                }
-            }
-*/
             return sq;
-           // return Enumerable.Empty<Square>();
+        
         }
 
         private Square AddNewSquare(Player p,int row,int col)
@@ -144,14 +80,53 @@ namespace Chessington.GameEngine.Pieces
                 
             if (p  == Player.Black)
             {    // newSquare = CreateNewSquare(row+1, col);
-            newSquare=new Square(row+1,col);
+            newSquare=new Square(row,col);
             }
             if (p == Player.White)
             {    //newSquare = CreateNewSquare(row-1, row);
-                newSquare=new Square(row-1,col);
+                newSquare=new Square(row,col);
             }
 
             return newSquare;
+        }
+        
+        private List<Square> CanPawnMoveDiagonally(int row, int col,Player player,Board board)
+        {
+            Boolean canMove = false;
+            List<Square> sq=new List<Square>();
+       
+            if (player == Player.Black)
+            {
+             
+                if (IsSquareOccupied(row + 1, col-1, board))
+                {
+                    sq.Add(AddNewSquare(this.Player,row+1 ,col-1));
+                } 
+                if (IsSquareOccupied(row + 1, col+1, board))
+                {
+                    sq.Add(AddNewSquare(this.Player,row+1 ,col+1));
+                } 
+             
+
+              
+            }
+            if (player == Player.White)
+            {
+                if (IsSquareOccupied(row -1, col-1, board))
+                {
+                    sq.Add(AddNewSquare(this.Player,row-1 ,col-1));
+                } 
+                if (IsSquareOccupied(row -1, col+1, board))
+                {
+                    sq.Add(AddNewSquare(this.Player,row-1 ,col+1));
+                } 
+               
+             
+            }
+          
+
+            return sq;
+
         }
         private Boolean CanPawnMoveForward(int row, int col,Player player,Board board)
         {

@@ -8,7 +8,7 @@ namespace Chessington.GameEngine.Tests.Pieces
     [TestFixture]
     public class PawnTests
     {
-        [Test]
+      [Test]
         public void WhitePawns_CanMoveOneSquareUp()
         {
             var board = new Board();
@@ -138,7 +138,7 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(3, 3));
         }
         
-                [Test]
+            [Test]
         public void BlackPawns_CanMoveDiagonally_IfThereIsAPieceToTake()
         {
             var board = new Board();
