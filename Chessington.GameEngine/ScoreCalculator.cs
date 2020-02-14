@@ -1,10 +1,12 @@
-﻿namespace Chessington.GameEngine
+﻿using Chessington.GameEngine.Pieces;
+
+namespace Chessington.GameEngine
 {
     public class ScoreCalculator
     {
-        private Board _board;
+        private IBoard _board;
 
-        public ScoreCalculator(Board board)
+        public ScoreCalculator(IBoard board)
         {
             _board = board;
         }
@@ -17,8 +19,16 @@
 
         public int GetBlackScore()
         {
+            var score = 0;
             // Should add up the value of all of the pieces that black has taken.
-            return 0;
+            foreach (var piece in _board.CapturedPieces)
+            {
+                if (piece is Rook)
+                {
+                    score += 5;
+                }
+            }
+            return score;
         }
     }
 }
