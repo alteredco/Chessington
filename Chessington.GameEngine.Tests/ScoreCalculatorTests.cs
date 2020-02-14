@@ -12,12 +12,12 @@ namespace Chessington.GameEngine.Tests
 
         public void ScoreCalculatorTest()
         {
-            var rook = new Rook(Player.Black);
+            var bishop = new Bishop(Player.Black);
             var board = A.Fake<IBoard>();
-            A.CallTo(() => board.CapturedPieces).Returns(new List<Piece> {rook});
+            A.CallTo(() => board.CapturedPieces).Returns(new List<Piece> {bishop});
             var scoreCalculator = new ScoreCalculator(board);
 
-            scoreCalculator.GetBlackScore().Should().Be(5);
+            scoreCalculator.GetWhiteScore().Should().Be(3);
         }
     }
 }
