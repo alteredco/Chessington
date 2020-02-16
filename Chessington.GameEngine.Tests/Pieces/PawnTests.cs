@@ -8,7 +8,7 @@ namespace Chessington.GameEngine.Tests.Pieces
     [TestFixture]
     public class PawnTests
     {
-      [Test]
+    [Test]
         public void WhitePawns_CanMoveOneSquareUp()
         {
             var board = new Board();
