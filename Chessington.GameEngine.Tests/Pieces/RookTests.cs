@@ -67,5 +67,18 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().Contain(Square.At(4, 6));
             moves.Should().Contain(Square.At(4, 7));
         }
+
+        [Test]
+        public void Rook_CannotMoveDiagonally()
+        {
+            var rook = new Rook(Player.Black);
+            _board.AddPiece(Square.At(3, 2), rook );
+
+            var moves = rook.GetAvailableMoves(_board);
+            moves.Should().NotContain(Square.At(4, 3));
+            moves.Should().NotContain(Square.At(0, 5));
+            moves.Should().NotContain(Square.At(4, 1));
+            moves.Should().NotContain(Square.At(7, 0));
+        }
     }
 }
